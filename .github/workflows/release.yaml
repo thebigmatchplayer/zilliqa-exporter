@@ -26,14 +26,14 @@ jobs:
       - name: Build binaries
         run: |
           mkdir -p dist
-          GOOS=linux GOARCH=amd64 go build -o dist/zilliqa-exporter-linux-amd64 main.go
-          GOOS=darwin GOARCH=arm64 go build -o dist/zilliqa-exporter-darwin-arm64 main.go
+          GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o dist/zilliqa-exporter-linux-amd64 ./cmd
+          GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o dist/zilliqa-exporter-darwin-arm64 ./cmd
 
       - name: Generate SHA256 checksums
         run: |
           cd dist
-          shasum -a 256 zilliqa-exporter-linux-amd64 > zilliqa-exporter-linux-amd64.sha256
-          shasum -a 256 zilliqa-exporter-darwin-arm64 > zilliqa-exporter-darwin-arm64.sha256
+          sha256sum zilliqa-exporter-linux-amd64 > zilliqa-exporter-linux-amd64.sha256
+          sha256sum zilliqa-exporter-darwin-arm64 > zilliqa-exporter-darwin-arm64.sha256
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
