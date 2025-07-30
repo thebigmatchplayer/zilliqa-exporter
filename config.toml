@@ -1,0 +1,4 @@
+[exporter]
+rpc_endpoint="http://127.0.0.1/"
+scrape_interval=15
+port=6969
